@@ -1,0 +1,45 @@
+Searching 1260 files for "runprogram"
+
+
+/Volumes/f25zhao/cs350-os161/os161-1.99/kern/include/test.h:
+   83  
+   84  /* Routine for running a user-level program. */
+   85: int runprogram(char *progname, char **args);
+   86  
+   87  /* Kernel menu system. */
+
+/Volumes/f25zhao/cs350-os161/os161-1.99/kern/startup/menu.c:
+   81   * in the future.
+   82   *
+   83:  * It copies the program name because runprogram destroys the copy
+   84   * it gets by passing it to vfs_open(). 
+   85   */
+   ..
+  105  	strcpy(progname, args[0]);
+  106  
+  107: 	result = runprogram(progname, args);
+  108  	if (result) {
+  109  		kprintf("Running program %s failed: %s\n", args[0],
+  ...
+  112  	}
+  113  
+  114: 	/* NOTREACHED: runprogram only returns on error. */
+  115  }
+  116  
+  ...
+  140  
+  141  	/* Create a process for the new program to run in. */
+  142: 	proc = proc_create_runprogram(args[0] /* name */);
+  143  	if (proc == NULL) {
+  144  		return ENOMEM;
+
+
+/Volumes/f25zhao/cs350-os161/os161-1.99/kern/syscall/runprogram.c:
+   57   */
+   58  int
+   59: runprogram(char *progname, char **args)
+   60: //int runprogram (userptr_t progname, userptr_t args)
+   61  {
+   62  	struct addrspace *as;
+
+24 matches across 13 files
